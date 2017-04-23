@@ -6,8 +6,13 @@
 package ltshowcase;
 
 import ltshowcase.model.Photo;
+import ltshowcase.model.Album;
+//import ltshowcase.RemoveDuplicates;
 
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,9 +24,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 import com.google.gson.*;
-
-
-
 
 /**
  *
@@ -40,7 +42,7 @@ public class ltshowcase {
 
   public static String readJsonFromUrl(String url) throws IOException {
     InputStream is = new URL(url).openStream();
-    try {
+    try  {
       BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
       String jsonText = readAll(rd);
       return jsonText;
@@ -50,6 +52,8 @@ public class ltshowcase {
   }
 
     public static void main(String[] args) throws IOException {
+        
+        // THIS CODE IS FOR IMPORTING JSON DATA INTO A LARGE STRING FOR FORMATTING
         String json = "";
         try{
             json = readJsonFromUrl("https://jsonplaceholder.typicode.com/photos");
@@ -60,12 +64,15 @@ public class ltshowcase {
             if (json.equals(""))
                 json = "error";
         }
-        System.out.println(json);
         Gson gson = new Gson();
         
-        Object[] photoArray = gson.fromJson(json, Photo[].class);
-        //System.out.println(Arrays.toString(photoArray));
+        Photo[] photoArray  = gson.fromJson(json, Photo[].class);
+        Album[] photoAlbum = photoArray;
+        
+        Object[] displayAlbumId = RemoveDuplicates.removeDuplicates(photoAlbum);        
+        
+        System.out.println(displayAlbumId.length);               
         
     }
-}
     
+}

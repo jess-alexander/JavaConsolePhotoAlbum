@@ -24,6 +24,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 import com.google.gson.*;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -53,7 +55,7 @@ public class ltshowcase {
 
     public static void main(String[] args) throws IOException {
         
-        // THIS CODE IS FOR IMPORTING JSON DATA INTO A LARGE STRING FOR FORMATTING
+        // IMPORT JSON DATA INTO A LARGE STRING FOR PARSING
         String json = "";
         try{
             json = readJsonFromUrl("https://jsonplaceholder.typicode.com/photos");
@@ -64,14 +66,44 @@ public class ltshowcase {
             if (json.equals(""))
                 json = "error";
         }
-        Gson gson = new Gson();
         
+        // PARSE THE JSON INTO AN ARRAY OF PHOTO OBJECTS
+        Gson gson = new Gson();       
         Photo[] photoArray  = gson.fromJson(json, Photo[].class);
-        Album[] photoAlbum = photoArray;
+        //Album[] photoAlbum = photoArray;
         
-        Object[] displayAlbumId = RemoveDuplicates.removeDuplicates(photoAlbum);        
+        // REMOVE albumId DUPLICATES FOR EASY DISPLAY FOR USER
+        Object[] displayAlbumId = RemoveDuplicates.removeDuplicates(photoArray);        
         
-        System.out.println(displayAlbumId.length);               
+        System.out.println("\t\t===================================================");
+        System.out.println("\t\t======  Welcome to your photo album library! ======");
+        System.out.println("\t\t==== Enter the album id you would like to open ====");
+        System.out.println("\t\t===================================================");
+        
+        for(int i=0; i<displayAlbumId.length; i++){
+            if(i%10 == 0)
+                System.out.print("\n");
+            System.out.print("\t"+displayAlbumId[i]);
+            
+        }
+        System.out.println("\nTo return to this menu at any time, enter 0");
+        
+        /// ACCEPT USER INPUT
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        boolean success = false;
+        int input;
+        do{
+            try{
+                System.out.print("\n\nEnter Number:");
+                input = Integer.parseInt(br.readLine());
+                success=true;
+            }catch(NumberFormatException nfe){
+                System.err.println("Invalid Format, please try again");  
+            }   
+        }while(!success);
+        
+        // search/ pull all photos with the albumId == input
         
     }
     

@@ -31,7 +31,7 @@ Program Flow:
 
 Insights
 ** there are 100 albums in the JSON file, 5000 separate photo objects
-* -- need a specific game attack for displaying them
+* -- need a specific game plan for displaying them
 
 ** create an object to accept query specifications, then return data. 
 * -- object must accept and differentiate between requesting number 

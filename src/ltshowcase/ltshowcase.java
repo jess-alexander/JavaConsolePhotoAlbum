@@ -7,12 +7,13 @@ package ltshowcase;
 
 import ltshowcase.model.Photo;
 import ltshowcase.model.Album;
-//import ltshowcase.RemoveDuplicates;
 
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 import com.google.gson.*;
+import java.io.FileReader;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -53,24 +55,29 @@ public class ltshowcase {
     }
   }
 
-    public static void main(String[] args) throws IOException {
-        
+    public static void main(String[] args) throws IOException, FileNotFoundException  {
+                
         // IMPORT JSON DATA INTO A LARGE STRING FOR PARSING
-        String json = "";
+        Gson gson = new Gson();
+        Photo[] photoArray = null;
+        String json = "[]";
         try{
-            json = readJsonFromUrl("https://jsonplaceholder.typicode.com/photos");
+            json = readJsonFromUrl("");//https://jsonplaceholder.typicode.com/photos");
+            // PARSE THE JSON INTO AN ARRAY OF PHOTO OBJECTS         
+            photoArray  = gson.fromJson(json, Photo[].class);
         }catch (IOException ex) {
-            System.out.println("something bad happened WITH I/O...");
+            System.out.println("Check your internet connection");
+            try{
+                String path = "src/ltshowcase/photos.json";
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
+                photoArray = gson.fromJson(bufferedReader, Photo[].class);
+            } catch(FileNotFoundException e){
+                System.out.println(e);
+                //System.out.println("fatal error");
+                System.exit(0);
+            }                       
             // ISSUE: INSERT BETTER ERROR HANDLING
-        } finally{
-            if (json.equals(""))
-                json = "error";
-        }
-        
-        // PARSE THE JSON INTO AN ARRAY OF PHOTO OBJECTS
-        Gson gson = new Gson();       
-        Photo[] photoArray  = gson.fromJson(json, Photo[].class);
-        //Album[] photoAlbum = photoArray;
+        } 
         
         // REMOVE albumId DUPLICATES FOR EASY DISPLAY FOR USER
         Object[] displayAlbumId = RemoveDuplicates.removeDuplicates(photoArray);        
@@ -99,12 +106,14 @@ public class ltshowcase {
                 input = Integer.parseInt(br.readLine());
                 success=true;
             }catch(NumberFormatException nfe){
-                System.err.println("Invalid Format, please try again");  
+                System.err.println("Invalid Format, please try again");
+                input = 0;
             }   
         }while(!success);
         
         // search/ pull all photos with the albumId == input
         
+        System.out.println("You have entered "+input);
     }
     
 }

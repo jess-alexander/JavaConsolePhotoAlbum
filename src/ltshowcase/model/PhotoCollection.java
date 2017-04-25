@@ -60,7 +60,7 @@ public class PhotoCollection {
                 albumMap.put(photo.getAlbumId(), photo);
             } 
         }catch (IOException ex) {
-            System.out.println(ex);    
+            System.out.println("error in reading file");
             System.exit(0);
         } 
         return photoArray;
@@ -74,7 +74,7 @@ public class PhotoCollection {
             // POTENTIAL ISSUE: a missing entry in JSON results in setting the corresponding field in the object to null
             photoArray  = gson.fromJson(json, Photo[].class);
         }catch (IOException ex) {
-            System.out.println(ex);    
+            System.out.println("error in reading file");
             System.exit(0);
         } 
         return photoArray;
@@ -88,6 +88,7 @@ public class PhotoCollection {
         // display all albums
         Iterator iterator = albumMap.keySet().iterator();
         int count = 0;
+        System.out.print(" "); //only for spacing on first line
         while(iterator.hasNext()){
             count++;
             System.out.print("\t"+iterator.next());

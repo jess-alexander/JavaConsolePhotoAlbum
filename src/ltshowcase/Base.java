@@ -65,7 +65,7 @@ public class Base {
         }
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         //read from json URL
         PhotoCollection.jsonAlbumIO();
         // print header and albumIds to choose from

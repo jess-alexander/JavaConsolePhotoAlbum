@@ -10,9 +10,6 @@ To run the project from the command line:
 User Story:
 
 - user will be given a range of albums to choose from
-     1   2   3   4   5   6   7   8   9  10
-    11  12  13  14  15  16  17  18  19  20
-
 - user will chose which album to investigate using the album id 
 - user will have an option to go to "main" (the beginning) to see album options
 

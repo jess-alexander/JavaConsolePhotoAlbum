@@ -9,23 +9,14 @@ package ltshowcase.model;
  *
  * @author Jess
  */
-public class Photo extends Album {
-    public int albumId;
-    public int id;
-    public String title;
-    public String url;
-    public String thumbnailUrl;
+public class Photo {
+    private int albumId;
+    private int id;
+    private String title;
+    private String url;
+    private String thumbnailUrl;
     
-    public Photo(int albumId, int id, String title, String url, String thumbnailUrl){
-
-        this.albumId = albumId;
-        this.id = id;
-        this.title = title;
-        this.url = url;
-        this.thumbnailUrl = thumbnailUrl;
-
-    }
-    // ISSUE: remove later, used for quicker testing
+    // ISSUE: Option to include url and thumbnailurl if upgrade to GUI 
     public Photo(int albumId, int id, String title){
 
         this.albumId = albumId;
@@ -33,13 +24,31 @@ public class Photo extends Album {
         this.title = title;
         this.url = "";
         this.thumbnailUrl = "";
-
     }
     
-    private Photo(){  }
+    private Photo(){  }        
     
     @Override
     public String toString() {
         return "["+ id +"]"+"  "+title;
+    }
+    
+    public int getAlbumId(){
+        return this.albumId;
+    } 
+    public void setAlbumId(int albumId){
+        this.albumId = albumId;
+    }
+    public int getId(){
+        return this.id;
+    } 
+    public void setId(int id){
+        this.id = id;
+    }
+    public String getTitle(){
+        return this.title;
+    } 
+    public void setTitle(String title){
+        this.title = title;
     }
 }

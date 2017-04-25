@@ -6,18 +6,13 @@
 package ltshowcase;
 
 import ltshowcase.model.Photo;
-import ltshowcase.model.Album;
-
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.List;
+//import ltshowcase.model.Album;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
@@ -25,11 +20,10 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 import com.google.gson.*;
-import java.io.FileReader;
-import java.util.Map;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
+
 
 /**
  *
@@ -38,43 +32,25 @@ import java.util.stream.Collectors;
 public class ltshowcase {
     
     private static String readAll(Reader rd) throws IOException {
-    StringBuilder sb = new StringBuilder();
-    int cp;
-    while ((cp = rd.read()) != -1) {
-      sb.append((char) cp);
+        StringBuilder sb = new StringBuilder();
+        int cp;
+        while ((cp = rd.read()) != -1) {
+          sb.append((char) cp);
+        }
+        return sb.toString();
     }
-    return sb.toString();
-  }
 
-  public static String readJsonFromUrl(String url) throws IOException {
-    InputStream is = new URL(url).openStream();
-    try  {
-      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-      String jsonText = readAll(rd);
-      return jsonText;
-    } finally {
-      is.close();
+    public static String readJsonFromUrl(String url) throws IOException {
+        InputStream is = new URL(url).openStream();
+        try  {
+          BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+          String jsonText = readAll(rd);
+          return jsonText;
+        } finally {
+          is.close();
+        }
     }
-  }
 
-    public static void main(String[] args) throws IOException, FileNotFoundException  {
-                
-        // IMPORT JSON DATA INTO AN OBJECT ARRAY
-        Photo[] photoArray = jsonIO();
-        
-        // REMOVE albumId DUPLICATES FOR EASY DISPLAY FOR USER
-        Object[] displayAlbumId = RemoveDuplicates.removeDuplicates(photoArray); 
-        
-        // PRINT ALBUM OPTIONS TO SCREEN
-        printIntro(displayAlbumId);
-        
-        /// PROMPT/ ACCEPT USER INPUT
-        int input = userInput();
-                
-        // search/ pull all photos with the albumId == input
-        
-        System.out.println("You have entered "+input);
-    }
     static Photo[] jsonIO(){
         Gson gson = new Gson();
         Photo[] photoArray = null;
@@ -115,6 +91,7 @@ public class ltshowcase {
             
         }
         System.out.println("\nTo return to this menu at any time, enter 0");
+        System.out.println("\nTo exit the program, enter -1");
         
     }
     
@@ -134,8 +111,49 @@ public class ltshowcase {
                 Logger.getLogger(ltshowcase.class.getName()).log(Level.SEVERE, null, ex);
             }   
         }while(!success);
-        
+        // ISSUE: NOTIFY USER IF INPUT IS OUTSIDE OF ALBUM RANGE
+        //if(>input<)
+        System.out.println("You have entered "+input);
         return input;
+        
+    }
+    
+    static void displayOutput(int input, Photo[] photoArray){
+        for(Photo photo: photoArray){
+            if(photo.albumId == input){
+                System.out.print("\t"+photo.toString()+"\n");
+            }else if(photo.albumId == input+1){
+                break;
+            }
+        }
+    }
+    
+    public static void main(String[] args) throws IOException, FileNotFoundException  {
+                
+        // IMPORT JSON DATA INTO AN OBJECT ARRAY
+        Photo[] photoArray = jsonIO();
+        
+        // REMOVE albumId DUPLICATES FOR EASY DISPLAY FOR USER
+        Object[] displayAlbumId = RemoveDuplicates.removeDuplicates(photoArray); 
+        
+        // PRINT ALBUM OPTIONS TO SCREEN
+        printIntro(displayAlbumId);
+        
+        int input;
+        do{
+            /// PROMPT/ ACCEPT USER INPUT
+            input = userInput();
+            // what if user inputs an album that doesn't exist?
+            // 
+            if(input == 0){
+              printIntro(displayAlbumId);
+              continue;
+            }
+            // search/ pull all photos with the albumId == input
+            displayOutput(input, photoArray); 
+            
+        }while(input != -1);
+        
         
     }
     

@@ -13,17 +13,12 @@ import java.util.List;
  * @author Jess
  */
 public class Album {
+    
+    /*
     public int albumId;
     
     int getAlbumId(){
         return albumId;
     }
-    void setAlbumId(int albumKey){
-        this.albumId = albumKey;
-    }
-    
-    @Override
-    public String toString() {
-        return "photo album "+albumId;
-    }
+*/
 }

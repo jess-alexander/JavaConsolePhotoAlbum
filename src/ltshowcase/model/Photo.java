@@ -10,6 +10,7 @@ package ltshowcase.model;
  * @author Jess
  */
 public class Photo extends Album {
+    public int albumId;
     public int id;
     public String title;
     public String url;
@@ -17,7 +18,7 @@ public class Photo extends Album {
     
     public Photo(int albumId, int id, String title, String url, String thumbnailUrl){
 
-        super.albumId = albumId;
+        this.albumId = albumId;
         this.id = id;
         this.title = title;
         this.url = url;

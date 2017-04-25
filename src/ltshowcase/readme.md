@@ -24,7 +24,7 @@ Program Flow:
 
 -- query the JSON file for only matching album number
 
--- print photos in a formatted 
+-- print photos in formatted 
 
 
 ================================================================================
@@ -33,9 +33,8 @@ Insights
 ** there are 100 albums in the JSON file, 5000 separate photo objects
 * -- need a specific game plan for displaying them
 
-** create an object to accept query specifications, then return data. 
-* -- object must accept and differentiate between requesting number 
-* --    of albums and displaying photos
+** Could to override .equals() and .hashcode() to determine which objects to print
+* --  https://www.mkyong.com/java/java-how-to-overrides-equals-and-hashcode/
 
 ** create an object to print data
 

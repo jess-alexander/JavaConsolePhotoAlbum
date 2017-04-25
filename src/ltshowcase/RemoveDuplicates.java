@@ -24,7 +24,7 @@ public class RemoveDuplicates
         //Converting set into an array
          
         Object[] arrayWithoutDuplicates = set.toArray();
-         
+ 
         return arrayWithoutDuplicates;
     }
     

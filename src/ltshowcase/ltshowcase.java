@@ -27,6 +27,8 @@ import java.nio.charset.Charset;
 import com.google.gson.*;
 import java.io.FileReader;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -57,31 +59,50 @@ public class ltshowcase {
 
     public static void main(String[] args) throws IOException, FileNotFoundException  {
                 
-        // IMPORT JSON DATA INTO A LARGE STRING FOR PARSING
+        // IMPORT JSON DATA INTO AN OBJECT ARRAY
+        Photo[] photoArray = jsonIO();
+        
+        // REMOVE albumId DUPLICATES FOR EASY DISPLAY FOR USER
+        Object[] displayAlbumId = RemoveDuplicates.removeDuplicates(photoArray); 
+        
+        // PRINT ALBUM OPTIONS TO SCREEN
+        printIntro(displayAlbumId);
+        
+        /// PROMPT/ ACCEPT USER INPUT
+        int input = userInput();
+                
+        // search/ pull all photos with the albumId == input
+        
+        System.out.println("You have entered "+input);
+    }
+    static Photo[] jsonIO(){
         Gson gson = new Gson();
         Photo[] photoArray = null;
         String json = "[]";
         try{
+            // preferred method import from URL to allow for data change
             json = readJsonFromUrl("");//https://jsonplaceholder.typicode.com/photos");
             // PARSE THE JSON INTO AN ARRAY OF PHOTO OBJECTS         
             photoArray  = gson.fromJson(json, Photo[].class);
         }catch (IOException ex) {
             System.out.println("Check your internet connection");
             try{
+                // next preferred method read from copied json file
                 String path = "src/ltshowcase/photos.json";
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
                 photoArray = gson.fromJson(bufferedReader, Photo[].class);
-            } catch(FileNotFoundException e){
+            } catch(FileNotFoundException | JsonSyntaxException | JsonIOException e){
                 System.out.println(e);
                 //System.out.println("fatal error");
                 System.exit(0);
             }                       
-            // ISSUE: INSERT BETTER ERROR HANDLING
         } 
         
-        // REMOVE albumId DUPLICATES FOR EASY DISPLAY FOR USER
-        Object[] displayAlbumId = RemoveDuplicates.removeDuplicates(photoArray);        
+        return photoArray;
         
+    }
+    static void printIntro(Object[] displayAlbumId){
+        // PRINT ALBUM OPTIONS TO SCREEN
         System.out.println("\t\t===================================================");
         System.out.println("\t\t======  Welcome to your photo album library! ======");
         System.out.println("\t\t==== Enter the album id you would like to open ====");
@@ -95,25 +116,27 @@ public class ltshowcase {
         }
         System.out.println("\nTo return to this menu at any time, enter 0");
         
-        /// ACCEPT USER INPUT
-        
+    }
+    
+    static int userInput(){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         boolean success = false;
-        int input;
+        int input = 0;
         do{
             try{
                 System.out.print("\n\nEnter Number:");
                 input = Integer.parseInt(br.readLine());
                 success=true;
-            }catch(NumberFormatException nfe){
+            }catch(NumberFormatException e){
                 System.err.println("Invalid Format, please try again");
                 input = 0;
+            } catch (IOException ex) {
+                Logger.getLogger(ltshowcase.class.getName()).log(Level.SEVERE, null, ex);
             }   
         }while(!success);
         
-        // search/ pull all photos with the albumId == input
+        return input;
         
-        System.out.println("You have entered "+input);
     }
     
 }

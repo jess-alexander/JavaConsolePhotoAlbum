@@ -1,9 +1,9 @@
 ================================================================================
 
 To run the project from the command line:
-# download the project
-# navigate to the project's dist folder within the command line
-# java -jar "LTShowCase.jar" 
+- download the project
+- navigate to the project's dist folder within the command line
+- java -jar "LTShowCase.jar" 
 
 ================================================================================
 

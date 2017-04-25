@@ -107,6 +107,8 @@ public class PhotoCollection {
             System.out.println("\t\t===================================================");
             System.out.println("\t\t\t Listing the photo info for album "+albumId);
             System.out.println("\t\t===================================================");
+            System.out.println("\n\t[photoID]  descriptive photo title");
+            System.out.println("\t------------------------------------------------------");
             // display photos associated with parameter
             Photo[] photoArray = jsonPhotoIO(albumId);
             for(Photo photo: photoArray){

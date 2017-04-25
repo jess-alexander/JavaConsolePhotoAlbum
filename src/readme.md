@@ -1,4 +1,5 @@
 ================================================================================
+
 Coded in NetBeans IDE 8.1
 
 Dependencies: gson-2.6.2.jar
@@ -6,6 +7,7 @@ Dependencies: gson-2.6.2.jar
 
 
 ================================================================================
+
 User Story:
 
 -- user will be given a range of albums to choose from
@@ -21,6 +23,7 @@ User Story:
 
 
 ================================================================================
+
 Program Flow:
 
 -- query JSON to display albums available.
@@ -34,6 +37,7 @@ Program Flow:
 ================================================================================
 ================================================================================
 ================================================================================
+
 
 Lean Techniques - Technical Showcase - Create a Photo Album
 Create a console application that displays photo ids and titles in an album. The photos are available in this online web service (https://jsonplaceholder.typicode.com/photos).

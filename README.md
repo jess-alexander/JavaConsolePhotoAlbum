@@ -1,10 +1,9 @@
 ================================================================================
 
-Coded in NetBeans IDE 8.1
-
-Dependencies: gson-2.6.2.jar
-
-
+To run the project from the command line:
+# download the project
+# navigate to the project's dist folder within the command line
+# java -jar "LTShowCase.jar" 
 
 ================================================================================
 
